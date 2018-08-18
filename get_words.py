@@ -9,10 +9,10 @@ def clone(parser):
 
 def parse(parser):
     part_of_speech = 'verb'
-    target_folder = 'func'
+    target_type = 'func'
     directories = 'target_folder'
 
-    parser.parse_most_common_words(part_of_speech, target_folder, directories)
+    parser.parse_most_common_words(part_of_speech, target_type, directories)
     return parser
 
 
