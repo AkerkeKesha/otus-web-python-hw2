@@ -15,8 +15,14 @@ class Parser(ValidatorMixin, PyScriptParserMixin):
     def set_part_of_speech(self, part_of_speech):
         self.part_of_speech = part_of_speech
 
+    def get_part_of_speech(self):
+        return self.part_of_speech
+
     def set_target_type(self, target_type):
         self.target_type = target_type
+
+    def get_target_type(self):
+        return self.target_type
 
     def set_directories(self, directories):
         self.directories = directories
@@ -31,26 +37,29 @@ class Parser(ValidatorMixin, PyScriptParserMixin):
         counted_words = collections.Counter(words)
         self.set_most_common_words(counted_words.most_common())
 
-    def get_paths_to_scripts_file(self, extension = '.py'):
+    def get_paths_to_scripts_file(self, extension=".py"):
         paths = []
         for directory in self.directories:
             for dirname, _, filenames in os.walk(directory, topdown=True):
                 paths.extend([os.path.join(dirname, filename)
                               for filename in filenames if filename.endswith(extension)])
+        #print(paths)
         return paths
 
     def get_words(self, paths):
-        return
-        # content_holding_tree = self.get_trees(paths)
-        # func_names = []
-        # for tree in content_holding_tree:
-        #     func_names.extend(self.parse_functions(tree))
-        # return self.parse_words_of_given_pos(func_names)
+        content_holding_tree = self.get_trees(paths)
+        func_names = []
+        for tree in content_holding_tree:
+            func_names.extend(self.parse_functions(tree))
+        return self.parse_words_of_given_pos(func_names)
 
+    def get_content(self, path):
+        with open(path, r, encoding='utf-8') as f:
+            content = f.read()
+        return content
 
     def set_most_common_words(self, counter):
         self.most_common_words = counter
-
 
     def save_results(self):
         pass
