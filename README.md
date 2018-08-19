@@ -9,7 +9,7 @@ Source: https://gist.github.com/Melevir/cd9f3f3935f9dfe34d78ae9b18f8e2b9
     $ source py/bin/activate
     $ pip install -r requirements.txt
 
-To run the program:
+
  To run the program use the following format, please:
     
 	Actions available:

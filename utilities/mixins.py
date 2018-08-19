@@ -59,7 +59,7 @@ class PyScriptParserMixin:
             if self.is_special_function(func_name):
                 continue
             words.extend([word for word in func_name.split('_') if word])
-        return [word for word, tag in pos_tag(words) if look_up_tag is tag]
+        return [word for word, tag in pos_tag(words) if look_up_tag in tag]
 
     def get_look_up_tag(self, pos):
         look_up_tags = {'verb': 'VB', 'noun': 'NN'}

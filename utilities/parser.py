@@ -35,9 +35,10 @@ class Parser(ValidatorMixin, PyScriptParserMixin):
         self.set_part_of_speech(part_of_speech)
         self.set_target_type(target_type)
         self.set_directories(directories)
+
         paths = self.get_paths_to_scripts_file()
         words = self.get_words(paths)
-        print(words)
+
         counted_words = collections.Counter(words)
         self.set_most_common_words(counted_words.most_common())
 
