@@ -36,15 +36,14 @@ class Parser(ValidatorMixin, PyScriptParserMixin):
         self.set_target_type(target_type)
         self.set_directories(directories)
         paths = self.get_paths_to_scripts_file()
-        print(paths)
         words = self.get_words(paths)
+        print(words)
         counted_words = collections.Counter(words)
         self.set_most_common_words(counted_words.most_common())
 
     def get_paths_to_scripts_file(self, extension=".py"):
         paths = []
         for directory in self.directories:
-            print(directory)
             for dirname, _, filenames in os.walk(directory, topdown=True):
                 paths.extend([os.path.join(dirname, filename)
                               for filename in filenames if filename.endswith(extension)])

@@ -38,11 +38,10 @@ class PyScriptParserMixin:
         for path in paths:
             content = self.get_content(path)
             tree = ast.parse(content)
-            trees.extend(tree)
+            trees.append(tree)
         return trees
 
     def parse_functions(self, tree):
-        print(self.get_target_type)
         if self.get_target_type() == 'func':
             return [node.name.lower()
                     for node in ast.walk(tree)
