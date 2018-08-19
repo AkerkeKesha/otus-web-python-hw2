@@ -1,8 +1,34 @@
 import ast
 from nltk import pos_tag
 
+from utilities.logger import Logger
+
+
 class ValidatorMixin:
-    pass
+
+    def __init__(self):
+        self.error_message = "error in input parameters for this program"
+        self.action_types = ['parse', 'clone']
+        self.parts_of_speech = ['verb', 'noun']
+        self.target_types = ['func', 'var']
+
+    def validate_action_type(self, action_type):
+        if action_type not in self.action_types:
+            Logger().error("Wrong action type.\n")
+            raise AttributeError(self.error_message)
+
+    def validate_part_of_speech(self, part_of_speech):
+        if part_of_speech not in self.parts_of_speech:
+            Logger().error("Not supported part of speech.\n")
+            raise AttributeError(self.error_message)
+
+    def validate_target_type(self, target_type):
+        if target_type not in self.target_types:
+            Logger().error("Not supported target type.\n")
+            raise AttributeError(self.error_message)
+
+    def validate_directory(selfs, directory):
+        pass
 
 
 class PyScriptParserMixin:
@@ -21,7 +47,10 @@ class PyScriptParserMixin:
             return [node.name.lower()
                     for node in ast.walk(tree)
                         if isinstance(node, ast.FunctionDef)]
-        #elif self.get_target_type() == 'var':
+        elif self.get_target_type() == 'var':
+            return [node.targets[0].id.lower()
+                    for node in ast.walk(tree)
+                        if isinstance(node, ast.Assign)]
 
     def parse_words_of_given_pos(self, func_names):
         pos = self.get_part_of_speech()
